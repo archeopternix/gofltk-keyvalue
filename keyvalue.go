@@ -79,6 +79,7 @@ func (grid *KeyValueGrid) Resize(x, y, w, h int) {
 func (grid *KeyValueGrid) Refresh() {
 	// Find the longest key
 	longestKeyText := ""
+
 	for _, group := range grid.tree.Groups {
 		for _, elem := range group.Elements {
 			if len(elem.Key) > len(longestKeyText) {
@@ -86,10 +87,13 @@ func (grid *KeyValueGrid) Refresh() {
 			}
 		}
 	}
+
 	// Get the width in pixels for the longest key
 	keyWidth := 70 // Default minimum width
+
 	if longestKeyText != "" {
-		w, _ := fltk.MeasureText(longestKeyText, false)
+		//w, _ := fltk.MeasureText(longestKeyText, true)
+		w := len(longestKeyText) * 6
 		keyWidth = w + 16 // Add padding for readability
 		if keyWidth < 70 {
 			keyWidth = 70
@@ -107,6 +111,7 @@ func (grid *KeyValueGrid) Refresh() {
 			grid.parent.Remove(in)
 		}
 	}
+
 	grid.groupWidgets = make(map[string]*groupWidgets)
 	grid.nextY = grid.y + 15
 
@@ -139,7 +144,8 @@ func (grid *KeyValueGrid) drawGroup(group *KVPgroup, keyWidth int) *groupWidgets
 	box.SetBox(fltk.EMBOSSED_BOX)
 	box.Begin()
 
-	labelwidth, _ := fltk.MeasureText(group.Name, false)
+	//	ToDo: crash: labelwidth, _ := fltk.MeasureText(group.Name, false)
+	labelwidth := len(group.Name) * 6
 	label := fltk.NewBox(fltk.FLAT_BOX, boxLeft+10, grid.nextY-7, labelwidth+20, labelHeight, group.Name)
 	label.SetAlign(fltk.ALIGN_LEFT | fltk.ALIGN_INSIDE)
 	label.SetLabelSize(10)
@@ -191,6 +197,7 @@ func (grid *KeyValueGrid) Add(groupName, key, value string) bool {
 			break
 		}
 	}
+
 	if group == nil {
 		grid.tree.Groups = append(grid.tree.Groups, KVPgroup{Name: groupName})
 		group = &grid.tree.Groups[len(grid.tree.Groups)-1]
@@ -203,6 +210,7 @@ func (grid *KeyValueGrid) Add(groupName, key, value string) bool {
 		grid.Refresh()
 		return true
 	}
+
 	// Find or add key
 	for i := range group.Elements {
 		if group.Elements[i].Key == key {
@@ -213,9 +221,13 @@ func (grid *KeyValueGrid) Add(groupName, key, value string) bool {
 			return true
 		}
 	}
+
 	group.Elements = append(group.Elements, KVPelement{Key: key, Value: value})
+
 	grid.Refresh()
+
 	return true
+
 }
 
 // Delete removes an entire group (if key is empty) or a specific key in the group.
