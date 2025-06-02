@@ -11,21 +11,17 @@ func main() {
 
 	win := fltk.NewWindow(500, 420)
 	win.SetLabel("KeyValueGrid Demo")
+	win.Resizable(win)
 
+	// Create the KeyValueGrid (replace NewKeyValueGrid with correct import if needed)
 	grid := NewKeyValueGrid(win, 20, 20, 460, 350)
-	win.Add(grid)
-	grid.Refresh()
 
-	// Add some groups and key-value pairs
-	grid.Add("User Account Information", "Name", "Alice")
-	grid.Add("User", "Email", "alice@example.com")
-	grid.Add("Settings", "Theme", "Dark")
-	grid.Add("Settings", "Language", "en-US")
-	grid.Add("Network", "Proxy", "")
-	grid.Add("Network", "Timeout", "30s")
+	// Button row: horizontal pack for buttons
+	buttonRow := fltk.NewPack(0, win.H()-50, 500, 40)
+	buttonRow.SetType(fltk.HORIZONTAL)
 
 	// Button to print data from UI edits
-	printBtn := fltk.NewButton(20, 380, 120, 30, "Print Data")
+	printBtn := fltk.NewButton(20, 0, 120, 30, "Print Data")
 	printBtn.SetCallback(func() {
 		tree := grid.GetData()
 		fmt.Println("==== Data from UI ====")
@@ -36,15 +32,25 @@ func main() {
 			}
 		}
 	})
-	win.Add(printBtn)
+	buttonRow.Add(printBtn)
 
 	// Button to clear all groups
-	clearBtn := fltk.NewButton(360, 380, 120, 30, "Clear All")
+	clearBtn := fltk.NewButton(360, 0, 120, 30, "Clear All")
 	clearBtn.SetCallback(func() {
 		fmt.Println("click")
 		grid.ClearAll()
 	})
-	win.Add(clearBtn)
+	buttonRow.Add(clearBtn)
+	buttonRow.End()
+	win.Add(buttonRow)
+
+	// Add some groups and key-value pairs after layout is set up
+	grid.Add("User Account Information", "Name", "Alice")
+	grid.Add("User", "Email", "alice@example.com")
+	grid.Add("Settings", "Theme", "Dark")
+	grid.Add("Settings", "Language", "en-US")
+	grid.Add("Network", "Proxy", "")
+	grid.Add("Network", "Timeout", "30s")
 
 	win.End()
 	win.Show()
