@@ -3,4 +3,4 @@
 /*
 gofltk-keyvalue document
 */
-package main
+package keyvalue
