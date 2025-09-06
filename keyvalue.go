@@ -1,9 +1,9 @@
-package main
+package keyvalue
 
 import (
 	"strings"
 
-	fltk "github.com/pwiecz/go-fltk"
+	fltk "github.com/archeopternix/go-fltk"
 )
 
 // --- Data structures ---

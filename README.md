@@ -84,7 +84,7 @@ type KVPelement struct {
 package main
 
 import (
-	fltk "github.com/pwiecz/go-fltk"
+	fltk "github.com/archeopternix/go-fltk"
 )
 
 func main() {

@@ -2,4 +2,4 @@ module github.com/archeopternix/gofltk-keyvalue
 
 go 1.23.2
 
-require github.com/pwiecz/go-fltk v0.0.0-20250418100050-a16aed0def84
+require github.com/archeopternix/go-fltk v0.0.0-20250906094057-27cfdf3359c1
