@@ -85,6 +85,7 @@ package main
 
 import (
 	fltk "github.com/archeopternix/go-fltk"
+	fltk "github.com/archeopternix/gofltk-keyvalue"
 )
 
 func main() {
@@ -93,6 +94,7 @@ func main() {
 	win := fltk.NewWindow(500, 420)
 	win.SetLabel("KeyValueGrid Demo")
 	win.Resizable(win)
+	win.Begin()
 
 	// Create the KeyValueGrid (replace NewKeyValueGrid with correct import if needed)
 	grid := NewKeyValueGrid(win, 20, 20, 460, 350)
